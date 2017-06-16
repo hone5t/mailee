@@ -1,0 +1,8 @@
+{
+  "name": "mailee",
+  "description": "Build Email for dev demon form in seconds",
+  "repository": "https://github.com/hone5t/mailee.git",
+  "logo": "https://raw.githubusercontent.com/hone5t/mailee/master/public/icon.svg",
+  "keywords": ["dev demon form","email template","expressionengine"],
+  "image": "heroku/nodejs"
+}

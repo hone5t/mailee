@@ -1,0 +1,29 @@
+{
+  "name": "mailee",
+  "version": "0.1.0",
+  "description": "A sample mail helper to create mail template",
+  "engines": {
+    "node": "6.10.2"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "ejs": "2.5.6",
+    "email-builder-core": "^2.1.0",
+    "express": "4.15.2",
+    "fs": "0.0.1-security"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hone5t/mailee.git"
+  },
+  "keywords": [
+    "dev demon forms",
+    "email responsive template",
+    "expressionengine",
+    "chrome email extension"
+  ],
+  "license": "MIT"
+}
