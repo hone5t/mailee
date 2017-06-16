@@ -1,0 +1,35 @@
+{
+  "name": "mailee",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "Create Test email template with dev demon forms or any form",
+  "homepage_url": "https://github.com/hone5t/mailee",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "browser_action": {
+    "default_icon": "icons/icon19.png",
+    "default_title": "mailee",
+    "default_popup": "src/browser_action/browser_action.html"
+  },
+  "options_ui": {"page":"src/options/options.html","chrome_style": true},
+  "permissions": [
+    "https://*/*",
+    "http://*/*",
+    "tabs",
+    "storage"
+    ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "js": [
+        "src/inject/inject.js"
+      ]
+    }
+  ]
+}

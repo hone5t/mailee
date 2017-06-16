@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<meta name="viewport" content="width=device-width">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<head>
+<!-- <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' /> -->
+<style type="text/css">
+	#mainPopup {
+        margin:0;
+        padding:0 5px;
+		height: 500px;
+		width: 608px;
+	}
+    .form-group{
+        margin-bottom: 5px;
+    }
+    #frm{
+        width:100%;
+    }
+    input,textarea {
+        width:100%;
+    }
+    #result{
+        border:2px solid black;
+        width:100% ;
+    }
+    #editor{
+        width:100;
+        height: 150px;
+    }
+</style>
+
+</head>
+<body>
+<div id="mainPopup">
+<h1>Mailee</h1>
+<form action='http://mail-ee.herokuapp.com' method='post' id='frm'>
+<div class="form-group">
+<input class="form-control" type='text'      name='preheader'        placeholder="Preheader"            />
+</div>
+<div class="form-group">
+<input class="form-control" type='text'      name='title'            placeholder="First Pargraph"       />
+</div>
+<div class="form-group">
+<input class="form-control" type='text'      name='intro'            placeholder="2nd Pargraph"         />
+</div>
+<div class="form-group">
+<input class="form-control" type='text'      name='action_text'      placeholder="action text if any"   />
+</div>
+<div class="form-group">
+<input class="form-control" type='text'      name='action_link'      placeholder="action link if any"   />
+</div>
+<div class="form-group">
+<input class="form-control" type='text'      name='footer_content'   placeholder="footer content if any"/>
+</div>
+<div class="form-group">
+<input class="form-control" type='text'      name='link_footer'      placeholder="link in the footer"   />
+</div>
+<div class="form-group">
+<input class="form-control" type='text'      name='link_footer_name' placeholder="the name of that link"/>
+</div>
+<div class="form-group">
+<div id="editor" ></div>
+</div>
+<input type='hidden' maxlength="500" name='msg' id='msg'/>
+<button id='get-template-btn' ><i class='glyphicon glyphicon-envelope'>Submit</i></button>
+<button id='preview' ><i class='glyphicon glyphicon-preview'>preview</i></button>
+</form>
+<div id='result'>
+
+
+</div>
+</div>
+<script type="text/javascript" src="../lib/jquery.js"></script>
+<script type="text/javascript" src="../lib/ace/ace.js"></script>
+<script type="text/javascript" src="../lib/ace/ext-language_tools.js"></script>
+<script type="text/javascript" src="../lib/browser_action.js"></script>
+
+</body>
+</html>
+
