@@ -45,9 +45,7 @@ function getPayload(obj)
 function sendEmail(payload,msg)
 {
     let transporter = nodemailer.createTransport({
-      host     : payload.host,
-      port     : payload.port,
-      secure   : true,
+      service  : "Gmail",
       auth     : {
                   username : payload.username,
                   password : payload.password
@@ -62,10 +60,12 @@ function sendEmail(payload,msg)
     transporter.sendMail(mailOptions,(err,info)=>{
         if (err) {
             console.error(err);
-            throw err;
-        }
+        } else {
         console.log('email sent');
+        }
+        transporter.close();
     });
+
 }
 
 function createResponse(response,payload) {
@@ -80,6 +80,7 @@ function createResponse(response,payload) {
     });
     return htmlResponse;
 }
+
 app.post('/', function(request,response){
     ///todo: complete post method
     response.setHeader('Content-Type', 'text');
@@ -89,6 +90,7 @@ app.post('/', function(request,response){
         sendEmail(request.body,emailMsg);
     }
 });
+
 app.get('/', function(request, response) {
     payload = getPayload(request.query);
     response.setHeader('Content-Type', 'text/html');
