@@ -1,15 +1,26 @@
 var editor;
 var smtpSettings = {};
+
+const formToJSON = elements => [].reduce.call(elements, (data, element) => {
+    data[element.name] = element.value;
+    return data;
+}, {});
+
 function popup(data,status,xhr) {
     chrome.tabs.query({currentWindow: true, active: true}, function (tabs){
     var activeTab = tabs[0];
     chrome.tabs.sendMessage(activeTab.id , {"data": data});
    });
 }
-    
+
 function loadChange(event,options)
 {
+    frm = document.getElementById('frm');
+    if (options.method == "get") {
     options.data = $('#frm').serialize();
+    } else {
+        options.data = formToJSON(frm.elements);
+    }
     $.ajax(options).done(function(data){
         //console.log('successful request'+data);
     });
@@ -18,7 +29,10 @@ function loadChange(event,options)
 
 function setOptions () {
     chrome.storage.sync.get('maileeOptions',(obj)=>{
-        smtpSettings = obj;
+        smtpSettings = obj.maileeOptions;
+        $('#username').val(smtpSettings.username);
+        $('#password').val(smtpSettings.password);
+        $('#email').val(smtpSettings.email);
     });
 }
 
@@ -46,6 +60,7 @@ $(document).ready(function(){
     $('#get-template-btn').click(function(e){
         options.method   = "post";
         options.dataType = "text";
+        options.headers  = {"content-type" : "application/json"};
         options.success  = (data,textStatus,jqXhr)=>{popup(data,textStatus,jqXhr)};
         loadChange(e,options);
     });

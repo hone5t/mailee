@@ -39,6 +39,12 @@ function getPayload(obj)
     };
     payload.link_footer = payload.link_footer.trim();
     payload.action_link = payload.action_link.trim();
+    if (obj.sendEmail) {
+      payload.username  = obj.username || '';
+      payload.password  = obj.password || '';
+      payload.email     = obj.email    || '';
+      payload.sendEmail = obj.sendEmail;
+    }
     return payload;
 }
 
@@ -52,16 +58,16 @@ function sendEmail(payload,msg)
       }
     });
     let mailOptions = {
-        from    : payload.fromEmail,
-        to      : payload.fromEmail,
+        from    : payload.email,
+        to      : payload.email,
         subject : 'Test Email Design',
         html    : msg
     }
     transporter.sendMail(mailOptions,(err,info)=>{
         if (err) {
-            console.error(err);
+            console.log(err);
         } else {
-        console.log('email sent');
+          console.log('email sent succefully');
         }
         transporter.close();
     });
@@ -84,9 +90,9 @@ function createResponse(response,payload) {
 }
 
 app.post('/', function(request,response){
-    ///todo: complete post method
+    payload = getPayload(request.body);
     response.setHeader('Content-Type', 'text');
-    createResponse(response,request.body);
+    createResponse(response,payload);
 });
 
 app.get('/', function(request, response) {
