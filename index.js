@@ -6,7 +6,7 @@ var emailBuilder = new EmailBuilder({relativePath:src});
 var app = express();
 var ejs = require('ejs');
 var bodyParser = require('body-parser')
-
+const nodemailer  = require('nodemailer');
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -42,21 +42,52 @@ function getPayload(obj)
     return payload;
 }
 
+function sendEmail(payload,msg)
+{
+    let transporter = nodemailer.createTransport({
+      host     : payload.host,
+      port     : payload.port,
+      secure   : true,
+      auth     : {
+                  username : payload.username,
+                  password : payload.password
+      }
+    });
+    let mailOptions = {
+        from    : payload.fromEmail,
+        to      : payload.fromEmail,
+        subject : 'Test Email Design',
+        html    : msg
+    }
+    transporter.sendMail(mailOptions,(err,info)=>{
+        if (err) {
+            console.error(err);
+            throw err;
+        }
+        console.log('email sent');
+    });
+}
+
 function createResponse(response,payload) {
+    let htmlResponse = '';
     response.writeHead(200);
     file = fs.readFileSync(  './views/index.ejs', 'utf-8');
     template = ejs.render(file,payload);
-    emailBuilder.inlineCss(template)
-    .then((html)=>{
+    emailBuilder.inlineCss(template).then((html)=>{
        response.write(html);
+       htmlResponse = html;
        response.end(); 
-    })
+    });
+    return htmlResponse;
 }
 app.post('/', function(request,response){
     ///todo: complete post method
     response.setHeader('Content-Type', 'text');
     payload = getPayload(request.body);
-    createResponse(response,payload);
+    emailMsg = createResponse(response,payload);
+    if (request.body.username){
+        sendEmail(request.body,emailMsg);
+    }
 });
 app.get('/', function(request, response) {
     payload = getPayload(request.query);
