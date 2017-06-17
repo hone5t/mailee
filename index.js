@@ -47,7 +47,7 @@ function sendEmail(payload,msg)
     let transporter = nodemailer.createTransport({
       service  : "Gmail",
       auth     : {
-                  username : payload.username,
+                  user : payload.username,
                   pass : payload.password
       }
     });
@@ -77,18 +77,16 @@ function createResponse(response,payload) {
        response.write(html);
        htmlResponse = html;
        response.end(); 
+       if (payload.sendEmail){
+           sendEmail(payload,html);
+       }
     });
-    return htmlResponse;
 }
 
 app.post('/', function(request,response){
     ///todo: complete post method
     response.setHeader('Content-Type', 'text');
-    payload = getPayload(request.body);
-    emailMsg = createResponse(response,payload);
-    if (request.body.username){
-        sendEmail(request.body,emailMsg);
-    }
+    createResponse(response,request.body);
 });
 
 app.get('/', function(request, response) {
