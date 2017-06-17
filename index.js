@@ -48,7 +48,7 @@ function sendEmail(payload,msg)
       service  : "Gmail",
       auth     : {
                   username : payload.username,
-                  password : payload.password
+                  pass : payload.password
       }
     });
     let mailOptions = {
