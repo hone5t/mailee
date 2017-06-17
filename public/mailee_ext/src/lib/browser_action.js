@@ -1,4 +1,5 @@
 var editor;
+var smtpSettings = {};
 function popup(data,status,xhr) {
     chrome.tabs.query({currentWindow: true, active: true}, function (tabs){
     var activeTab = tabs[0];
@@ -10,11 +11,19 @@ function loadChange(event,options)
 {
     options.data = $('#frm').serialize();
     $.ajax(options).done(function(data){
-        console.log('your ajax is done with'+data);
+        //console.log('successful request'+data);
+    });
+}
+
+
+function setOptions () {
+    chrome.storage.sync.get('maileeOptions',(obj)=>{
+        smtpSettings = obj;
     });
 }
 
 $(document).ready(function(){
+    setOptions();
     let options = {
         url : $('#frm').attr('action'),
         method : "get",
@@ -32,7 +41,6 @@ $(document).ready(function(){
     });
     editor.getSession().on('change', function(e) {
         $('#msg').val(editor.getValue());
-        console.log(editor.getValue());
         loadChange(e,options);
     });
     $('#get-template-btn').click(function(e){
@@ -42,3 +50,4 @@ $(document).ready(function(){
         loadChange(e,options);
     });
 });
+

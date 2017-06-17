@@ -14,11 +14,15 @@ function save_options(options) {
   });
 }
 
-// Restores select box and checkbox state using the preferences
-// stored in chrome.storage.
+
 function restore_options() {
   chrome.storage.sync.get('maileeOptions',(obj)=>{
-     options = obj;
+    options = obj;
+    document.getElementById('username').value = obj.username || '';
+    document.getElementById('password').value = obj.password || '';
+    document.getElementById('smtp').value     = obj.smtp || '';
+    document.getElementById('host').value     = obj.host || '';
+    document.getElementById('email').value    = obj.email || '';
   });
 }
 document.addEventListener('DOMContentLoaded',()=>{
@@ -26,7 +30,9 @@ document.addEventListener('DOMContentLoaded',()=>{
   let password = document.getElementById('password').value;
   let smtp     = document.getElementById('smtp').value;
   let host     = document.getElementById('host').value;
+  let email    = document.getElementById('email').value;
   let options  = {
+    email    : email,
     username : username,
     password : password,
     smtp     : smtp,
