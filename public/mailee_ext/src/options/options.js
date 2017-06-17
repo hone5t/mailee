@@ -20,7 +20,6 @@ function restore_options() {
     options = obj;
     document.getElementById('username').value = obj.username || '';
     document.getElementById('password').value = obj.password || '';
-    document.getElementById('smtp').value     = obj.smtp || '';
     document.getElementById('host').value     = obj.host || '';
     document.getElementById('email').value    = obj.email || '';
   });
@@ -28,14 +27,12 @@ function restore_options() {
 document.addEventListener('DOMContentLoaded',()=>{
   let username = document.getElementById('username').value;
   let password = document.getElementById('password').value;
-  let smtp     = document.getElementById('smtp').value;
   let host     = document.getElementById('host').value;
   let email    = document.getElementById('email').value;
   let options  = {
     email    : email,
     username : username,
     password : password,
-    smtp     : smtp,
     host     : host
   };
 
