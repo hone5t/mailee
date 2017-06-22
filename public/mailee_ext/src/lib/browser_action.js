@@ -2,7 +2,8 @@ var editor;
 var smtpSettings = {};
 
 const formToJSON = elements => [].reduce.call(elements, (data, element) => {
-    data[element.name] = element.value;
+    if( element.name)
+        data[element.name] = element.value;
     return data;
 }, {});
 
@@ -16,11 +17,12 @@ function popup(data,status,xhr) {
 function loadChange(event,options)
 {
     frm = document.getElementById('frm');
-    if (options.method == "get") {
+    if (options.type == "GET") {
     options.data = $('#frm').serialize();
     } else {
-        options.data = formToJSON(frm.elements);
+        options.data = JSON.stringify(formToJSON(frm.elements));
     }
+    console.log(options);
     $.ajax(options).done(function(data){
         //console.log('successful request'+data);
     });
@@ -40,7 +42,7 @@ $(document).ready(function(){
     setOptions();
     let options = {
         url : $('#frm').attr('action'),
-        method : "get",
+        type : "GET",
         dataType:"html",
         async: true,
         crossDomain: true,
@@ -58,7 +60,7 @@ $(document).ready(function(){
         loadChange(e,options);
     });
     $('#get-template-btn').click(function(e){
-        options.method   = "post";
+        options.type     = "POST";
         options.dataType = "text";
         options.headers  = {"content-type" : "application/json"};
         options.success  = (data,textStatus,jqXhr)=>{popup(data,textStatus,jqXhr)};
